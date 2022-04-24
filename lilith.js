@@ -52,47 +52,20 @@ client.on('messageCreate', msg => {
 
     if (!msg.guild) return msg.channel.send("Ei pyge")
 
+    
     let args = msg.content.slice(prefix.length).trim().split(/ +/);
-    let commandWithoutSpace = args.shift().toLowerCase();
-    let commandWithSpace1 = `${commandWithoutSpace} ${args[0]}`;
-    let commandWithSpace2 = `${commandWithoutSpace} ${args[0]} ${args[1]}`;
-    let commandWithSpace3 = `${commandWithoutSpace} ${args[0]} ${args[1]} ${args[2]}`;
-    let commandWithSpace4 = `${commandWithoutSpace} ${args[0]} ${args[1]} ${args[2]} ${args[3]}`;
-    let commandWithSpace5 = `${commandWithoutSpace} ${args[0]} ${args[1]} ${args[2]} ${args[3]} ${args[4]}`;
     let command = null;
+    
+    for(let i = args.length < 6 ? args.length : 6; i > 0; i--) {
+        let tempCmd = args.slice(0 , i).join(" ");
+        if(client.commands.has(tempCmd)) {
+            command = client.commands.get(tempCmd)
+            args = args.splice(i)
+            break;
+        }
+    }
 
-// check with the space first
-if (client.commands.has(commandWithSpace1)) {
-    command = commandWithSpace1;
-    args.shift();
-} else if (client.commands.has(commandWithSpace2)) {
-    command = commandWithSpace2;
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithSpace3)) {
-    command = commandWithSpace3;
-    args.shift();
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithSpace4)) {
-    command = commandWithSpace4;
-    args.shift();
-    args.shift();
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithSpace5)) {
-    command = commandWithSpace5;
-    args.shift();
-    args.shift();
-    args.shift();
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithoutSpace)) {
-    // Ok komennos ei löydy viittä välilyöntii    
-    command = commandWithoutSpace;
-}
-
-
+    
     if (!command) {
         const msgs = [
             "Minulla ei ole mitään hajua mitä haluat minun tekevän :bone:",
@@ -106,7 +79,6 @@ if (client.commands.has(commandWithSpace1)) {
         msg.channel.send(randomMsg)
         return
     }
-    command = client.commands.get(command) //gets the actual command object
 
 
     try {
