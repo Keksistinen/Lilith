@@ -9,7 +9,7 @@ module.exports = {
         var currentdate = new Date();
         var datetime = currentdate.toLocaleString('en-us', { timeZone: 'Europe/Helsinki' }).split(',')[1].trim()
 
-        message.channel.send(':clock: näyttäisi olevan ' + datetime);
+        message.channel.send(':alarm_clock: näyttäisi olevan ' + datetime);
     },
 }
 

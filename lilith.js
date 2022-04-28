@@ -1,12 +1,34 @@
-// Everything has been written by Pizzakeitto,
-// using https://discordjs.guide/ as example :) yes
+// Almost everything is written by Pizzakeitto // Thanks for heelp :3
 
-const Discord = require('discord.js')
+
+const Discord = require('discord.js');
 require('dotenv').config()
-const { prefix } = require('./config.json')
-const fs = require('fs')
+const { prefix } = require('./config.json');
+const fs = require('fs');
+const log = fs.createWriteStream("log.txt", { flags: 'a' })
+
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(
+    "mongodb://localhost:27017/lilith",
+    { useNewUrlParser: true }
+);
+
+const db = mongoose.connection;
+
+db.once("open", () => {
+    console.log("[Lilith] Successfully connected to database!");
+});
 
 const maintenancemode = false
+
+
+console.log = function (x) {
+    log.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
+    process.stdout.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
+}
 
 const client = new Discord.Client({
     intents: ['GUILDS',
@@ -35,11 +57,19 @@ for (const folder of commandFolders) {
     }
 }
 
-console.log(client.commands)
+// console.log(client.commands)
 
 client.once('ready', () => {
     client.user.setStatus("online")
     console.log('[Lilith] I am aliveee')
+})
+
+
+client.on('messageCreate', msg => {
+    if (msg.author.bot) return
+    if (msg.mentions.users.has(client.user.id)) {
+        msg.channel.send(`Paikalla! :airplane:`)
+    }
 })
 
 client.on('messageCreate', msg => {
@@ -61,36 +91,36 @@ client.on('messageCreate', msg => {
     let commandWithSpace5 = `${commandWithoutSpace} ${args[0]} ${args[1]} ${args[2]} ${args[3]} ${args[4]}`;
     let command = null;
 
-// check with the space first
-if (client.commands.has(commandWithSpace1)) {
-    command = commandWithSpace1;
-    args.shift();
-} else if (client.commands.has(commandWithSpace2)) {
-    command = commandWithSpace2;
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithSpace3)) {
-    command = commandWithSpace3;
-    args.shift();
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithSpace4)) {
-    command = commandWithSpace4;
-    args.shift();
-    args.shift();
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithSpace5)) {
-    command = commandWithSpace5;
-    args.shift();
-    args.shift();
-    args.shift();
-    args.shift();
-    args.shift();
-} else if (client.commands.has(commandWithoutSpace)) {
-    // Ok komennos ei löydy viittä välilyöntii    
-    command = commandWithoutSpace;
-}
+    // check with the space first
+    if (client.commands.has(commandWithSpace1)) {
+        command = commandWithSpace1;
+        args.shift();
+    } else if (client.commands.has(commandWithSpace2)) {
+        command = commandWithSpace2;
+        args.shift();
+        args.shift();
+    } else if (client.commands.has(commandWithSpace3)) {
+        command = commandWithSpace3;
+        args.shift();
+        args.shift();
+        args.shift();
+    } else if (client.commands.has(commandWithSpace4)) {
+        command = commandWithSpace4;
+        args.shift();
+        args.shift();
+        args.shift();
+        args.shift();
+    } else if (client.commands.has(commandWithSpace5)) {
+        command = commandWithSpace5;
+        args.shift();
+        args.shift();
+        args.shift();
+        args.shift();
+        args.shift();
+    } else if (client.commands.has(commandWithoutSpace)) {
+        // Ok komennos ei löydy viittä välilyöntii    
+        command = commandWithoutSpace;
+    }
 
 
     if (!command) {
@@ -100,7 +130,7 @@ if (client.commands.has(commandWithSpace1)) {
             "Ei pysty",
             "EPEK = Ei pysty ei kykene",
             "En voi toteuttaa pyyntöäsi",
-            "Ei huvita nyt, katsotaanko myöehmmin?",
+            "Ei huvita toteuttaa komentoasi nyt, katsotaanko myöhemmin?",
         ]
         let randomMsg = msgs[Math.floor(Math.random() * msgs.length)]
         msg.channel.send(randomMsg)
@@ -126,4 +156,5 @@ process.on('SIGINT', function () {
     process.abort()
 })
 
-client.login(process.env.TOKEN) 
+client.login(process.env.TOKEN)
+
