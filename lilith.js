@@ -25,10 +25,10 @@ db.once("open", () => {
 const maintenancemode = false
 
 
-console.log = function (x) {
-    log.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
-    process.stdout.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
-}
+// console.log = function (x) {
+//     log.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
+//     process.stdout.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
+// }
 
 const client = new Discord.Client({
     intents: ['GUILDS',
@@ -62,6 +62,7 @@ for (const folder of commandFolders) {
 client.once('ready', () => {
     client.user.setStatus("online")
     console.log('[Lilith] I am aliveee')
+    client.channels.cache.get(process.env.CHANNELID).send('[System] Elossa prkle') 
 })
 
 

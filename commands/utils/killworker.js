@@ -9,7 +9,8 @@ module.exports = {
     description: 'a work',
     detailedDescription: 'TÖITÄ SAATANA',
     execute(message = Discord.Message.prototype, args = []) {
-        if (message.author.id != 221652595486228481 && message.author.id != 615986019069591612 && message.author.id != 246721024102498304) return message.reply('Sori, et ole Eemil tai Alvar. En voi toteuttaa komentoasi.')
+        if (message.author.id != 221652595486228481 && message.author.id != 615986019069591612 && message.author.id != 246721024102498304) return message.reply('Sori, et ole Eemil tai Alvar. En voi toteuttaa komentoasi.') 
+        // Preventtaa ALeksin yritykset
 
         const slave = args.join(' ')
         worker.deleteOne({WorkerName: slave}).then(result => {

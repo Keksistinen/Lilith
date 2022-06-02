@@ -76,7 +76,7 @@ module.exports = {
             
             const finalanswer = answer4.first().content.toLowerCase()
             if(finalanswer == 'joo') {
-                message.channel.send('juu hyvä homma Tiedot on nyt tallenettu järjestelmään.')
+                message.channel.send('Tiedot on nyt tallennettu järjestelmään.')
 
                 const orja = new worker({
                     WorkerName: nimi,
