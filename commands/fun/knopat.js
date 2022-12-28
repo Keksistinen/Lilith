@@ -7,18 +7,16 @@ module.exports = {
 
     execute(message = Discord.Message.prototype, args = []) {
         function getRandom(max) {
-            return Math.random() * (max - 1) + 1
+            return Math.round( Math.random() * (max - 1) + 1 )
         }
 
-        let number = getRandom(21)
-        message.channel.send(`Ei perhana sait ${Math.floor(number)}`)
-        console.log(`Annettu arvo: ${Math.floor(number)}`)
+        const haluttunoppa = args[0] || 6
+        if (isNaN(haluttunoppa)) return message.channel.send("ree ei oo numero")
+        let number = getRandom(haluttunoppa)
+        message.channel.send(`Ei perhana sait ${number}`)
+        console.log(`Annettu arvo: ${number}`)
 
 
     }
 
 }
-
-
-//Tarvittavat knopat
-//D6, D20, D4, D8, D10 ja D12
