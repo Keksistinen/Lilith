@@ -17,7 +17,6 @@ console.log('[-=- Lilith -=-]');
 const Discord = require('discord.js');
 require('dotenv').config()
 const { prefix } = require('./config.json');
-const { prefix2 } = require('./config.json');
 const fs = require('fs');
 const log = fs.createWriteStream("log.txt", { flags: 'a' })
 

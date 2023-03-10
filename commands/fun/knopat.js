@@ -15,6 +15,7 @@ module.exports = {
         let number = getRandom(haluttunoppa)
         message.channel.send(`Ei perhana sait ${number}`)
         console.log(`Annettu arvo: ${number}`)
+        console.log('Nopan arvo: d'+ haluttunoppa)
 
 
     }
