@@ -3,16 +3,16 @@ const axios = require("axios").default
 const Discord = require('discord.js')
 
 module.exports = {
-    name: 'hae kuvat',
+    name: 'gethentai',
     description: 'voi vittu',
     detailedDescription: 'NO, OH GOD NO!',
     execute(message = Discord.Message.prototype, args = []) {
         if (message.author.id != '221652595486228481') return message.channel.send(`Sorry ${message.author.username}, I can't do that`)
-        const subreddit = 'nudes'
+        const subreddit = 'hentai' // Haluttu subreddit
 
         getPics()
         async function getPics() {
-            const amount = 200 // Kuinka monta se kaivaa
+            const amount = 500 // Kuinka monta se kaivaa
             let images = []
 
             const loopCount = Math.ceil(amount / 100)
@@ -28,7 +28,7 @@ module.exports = {
 
             console.log(`Löyty ${images.length} kuvaa.`)
             
-            fs.writeFileSync("/home/ubuntu/Lilith/data/toosat.json", JSON.stringify(images, null, 2))
+            fs.writeFileSync("/home/ubuntu/Lilith/data/fancy.json", JSON.stringify(images, null, 2))
         }
 
     },

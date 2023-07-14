@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const Discord = require('discord.js')
+const Discord = require('discord.js');
 
 module.exports = {
     name: 'näytä tissit',

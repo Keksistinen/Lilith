@@ -168,6 +168,7 @@ client.on('messageCreate', msg => {
     }
 })
 
+const nakkerino = '<@116931222067740676>' // Uljas ID, Mention
 
 process.on('exit', function () {
     client.destroy()
