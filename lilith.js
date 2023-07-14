@@ -3,26 +3,47 @@ const chalk = require('chalk');
 const LOGO =
 
 `
-,_ _                            
-/| | |   _                       
- | | |  / \_/|/|/|  /|/|/|  |  | 
- | | |_/\_/  | | |_/ | | |_/ \/|/
-                              (| 
-                        
+ _    _  _  _    _    _   
+| |  <_>| |<_> _| |_ | |_ 
+| |_ | || || |  | |  | . |
+|___||_||_||_|  |_|  |_|_|
+                         
 \n`;
 
 console.log(chalk.magenta(LOGO));
-console.log('[-=- Mommy -=-]');
+console.log('[-=- Lilith -=-]');
 
 
 const Discord = require('discord.js');
 require('dotenv').config()
 const { prefix } = require('./config.json');
 const fs = require('fs');
+const log = fs.createWriteStream("log.txt", { flags: 'a' })
 
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(
+    "mongodb://localhost:27017/lilith",
+    { useNewUrlParser: true }
+);
+
+const db = mongoose.connection;
+
+db.once("open", () => {
+    console.log("[Lilith] Successfully connected to database!");
+
+});
 
 
 const maintenancemode = false
+
+
+// console.log = function (x) {
+//     log.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
+//     process.stdout.write(`${new Date().toISOString()}: ${JSON.stringify(x, null, 2)}\n`)
+// }
 
 const client = new Discord.Client({
     intents: ['GUILDS',
@@ -50,38 +71,46 @@ for (const folder of commandFolders) {
         client.commands.set(command.name, command)
     }
 }
-/home/ubuntu/Mommy-bot/Mommy
+
 
 global.noniiError = function(errormessage) {
-    console.log(chalk.bold.red('[Mommy] ') + chalk.red(errormessage))
+    console.log(chalk.bold.red('[Lilith] ') + chalk.red(errormessage))
 }
 
 global.noniiGood = function(hyvismessage) {
-    console.log(chalk.bold.green('[Mommy] ') + chalk.green(hyvismessage))
+    console.log(chalk.bold.green('[Lilith] ') + chalk.green(hyvismessage))
 }
+
+// Read Commands from the systemCommands directory
+
+
+// under construction yeet
+
+
+//  console.log(client.commands)
 
 const keksi = '<@221652595486228481>' // Keksin käyttäjä ID -> Mention
 
 client.once('ready', () => {
     client.user.setStatus("online")
     client.user.setActivity('Maintenance: ' + maintenancemode, { type: 'STREAMING'})
-    console.log(chalk.green('[Mommy] I am aliveee'));
-    client.channels.cache.get(process.env.CHANNEL_D_ID1_P).sendTyping()
-    client.channels.cache.get(process.env.CHANNEL_D_ID1_P).send('[System] ' + keksi + ' Olen hereillä :3')
+    console.log(chalk.green('[Lilith] I am aliveee'));
+    client.channels.cache.get(process.env.CHANNELID2).sendTyping()
+    client.channels.cache.get(process.env.CHANNELID2).send('[System] ' + keksi + ' Olen hereillä :3')
     console.log('[System] ' + 'Huoltotila: ' + chalk.green(maintenancemode))
 
     
     if(maintenancemode == true) return 
     const embedOnline = new Discord.MessageEmbed()
-        .setAuthor({ name: 'Mommy - System [Start]', iconURL: 'https://cdn.discordapp.com/attachments/246928010408624128/969202704104693790/EZ5JJbi5_400x400.jpg' })
+        .setAuthor({ name: 'Lilith - System [Start]', iconURL: 'https://cdn.discordapp.com/attachments/246928010408624128/969202704104693790/EZ5JJbi5_400x400.jpg' })
         .setDescription('Olen hereillä :3')
         .setColor('#7fcd6a')
-        .setFooter({ text: 'Lé Toveri Keksistinen - Author of Mommy', iconURL: 'https://cdn.discordapp.com/attachments/246928010408624128/969202704104693790/EZ5JJbi5_400x400.jpg' })
+        .setFooter({ text: 'Lé Toveri Keksistinen - Author of Lilith', iconURL: 'https://cdn.discordapp.com/attachments/246928010408624128/969202704104693790/EZ5JJbi5_400x400.jpg' })
         .setThumbnail('https://cdn.discordapp.com/attachments/246928010408624128/992100309147070484/212e30e47232be03033a87dc58edaa95.png')
         .addField('System Status', 'Alive')
         .addField('MongoDB Status', 'Successfully connected')
         .addField('Huoltotila Status', String(maintenancemode))
-        client.channels.cache.get(process.env.CHANNEL_D_ID1_P).send({ embeds: [embedOnline]})
+        client.channels.cache.get(process.env.CHANNELID2).send({ embeds: [embedOnline]})
 
 })
 

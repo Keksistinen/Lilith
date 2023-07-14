@@ -1,8 +1,8 @@
 {
-  "name": "mommy-botti",
+  "name": "lilith-botti",
   "version": "1.0.0",
   "description": "Discord bot",
-  "main": "mommy.js",
+  "main": "lilith.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
